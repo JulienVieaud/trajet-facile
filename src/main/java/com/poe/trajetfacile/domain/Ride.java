@@ -1,5 +1,6 @@
 package com.poe.trajetfacile.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -12,6 +13,8 @@ public class Ride {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date startDate;
 
     private int totalPlaces;

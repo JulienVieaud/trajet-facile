@@ -34,7 +34,7 @@ public class UserController {
     }
 
     @PostMapping
-    public void signup(@RequestBody User user) {
+    public void save(@RequestBody User user) {
         System.out.println("signup | user: " + user);
         userService.signup(user);
     }
