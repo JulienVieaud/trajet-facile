@@ -1,5 +1,7 @@
 package com.poe.trajetfacile.form;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class OfferARideForm {
@@ -7,7 +9,13 @@ public class OfferARideForm {
     private Long userId;
     private String fromCity;
     private String toCity;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date startDate;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    private Date fullDate;
+
     private short startHours;
     private short startMinutes;
     private Double cost;
@@ -75,5 +83,13 @@ public class OfferARideForm {
 
     public void setSeats(short seats) {
         this.seats = seats;
+    }
+
+    public Date getFullDate() {
+        return fullDate;
+    }
+
+    public void setFullDate(Date fullDate) {
+        this.fullDate = fullDate;
     }
 }

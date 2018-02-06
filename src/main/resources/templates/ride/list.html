@@ -1,0 +1,25 @@
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" media="all"
+          href="/css/application.css" th:href="@{/css/application.css}"/>
+
+</head>
+<body>
+
+<table>
+    <tr>
+        <th>Départ</th>
+        <th>Arrivée</th>
+        <th>Nombre de places</th>
+        <th>Prix</th>
+    </tr>
+    <tr th:each="ride : ${rides}">
+        <td th:text="${ride.startDate}"/>
+        <td th:text="${ride.toCity}"/>
+        <td th:text="${ride.seats}"/>
+        <td th:text="${ride.cost}"/>
+    </tr>
+</table>
+
+</body>
+</html>
