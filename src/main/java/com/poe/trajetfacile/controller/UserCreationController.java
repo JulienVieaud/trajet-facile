@@ -26,15 +26,24 @@ public class UserCreationController {
 
     @GetMapping("/")
     public String showForm(UserCreationForm form) {
+        System.out.println(form.getLogin());
         return "signup";
     }
 
     @PostMapping("/")
-    public String save(@Valid UserCreationForm form, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String save(@Valid UserCreationForm form, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
 
         if (bindingResult.hasErrors()) {
             return "signup";
         }
+
+        if (userRepository.findByLogin(form.getLogin()) != null) {
+            // on a déjà un utilisateur avec ce login
+            redirectAttributes.addFlashAttribute("error", "Cet utilisateur existe déjà");
+            model.addAttribute("error", "Cet utilisateur existe déjà");
+            return "signup";
+        }
+
         User user = new User();
         user.setLogin(form.getLogin());
         user.setPassword(form.getPassword());

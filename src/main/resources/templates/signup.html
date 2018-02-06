@@ -6,13 +6,12 @@
         <tr>
             <td>Login:</td>
             <td><input type="text" th:field="*{login}"/></td>
-            <td th:if="${#fields.hasErrors('login')}" th:errors="*{login}"/>
+            <td th:if="${#fields.hasErrors('login')}" th:errors="*{login}" th:value="${userCreationForm.login}"/>
         </tr>
         <tr>
             <td>Password:</td>
             <td><input type="text" th:field="*{password}"/></td>
             <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}"/>
-            <input type="text" th:field="*{birthDate}"/>
         </tr>
         <tr>
             <td>
@@ -20,6 +19,7 @@
             </td>
         </tr>
     </table>
+    <div th:text="${error}"></div>
 </form>
 </body>
 </html>
