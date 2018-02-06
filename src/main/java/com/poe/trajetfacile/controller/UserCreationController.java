@@ -39,8 +39,7 @@ public class UserCreationController {
 
         if (userRepository.findByLogin(form.getLogin()) != null) {
             // on a déjà un utilisateur avec ce login
-            redirectAttributes.addFlashAttribute("error", "Cet utilisateur existe déjà");
-            model.addAttribute("error", "Cet utilisateur existe déjà");
+            model.addAttribute("duplicateLoginError", "Cet utilisateur existe déjà");
             return "signup";
         }
 
