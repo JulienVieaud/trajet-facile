@@ -1,22 +1,25 @@
 <html>
 <body>
-	<form action="#" th:action="@{/}" th:object="${userCreationForm}"
-		method="post">
-		<table>
-			<tr>
-				<td>Login:</td>
-				<td><input type="text" th:field="*{login}" /></td>
-				<td th:if="${#fields.hasErrors('login')}" th:errors="*{login}"/>
-			</tr>
-			<tr>
-				<td>Password:</td>
-				<td><input type="text" th:field="*{password}" /></td>
-				<td th:if="${#fields.hasErrors('password')}" th:errors="*{password}"/>
-			</tr>
-			<tr>
-				<td><button type="submit">Sign up!</button></td>
-			</tr>
-		</table>
-	</form>
+<form action="#" th:action="@{/}" th:object="${userCreationForm}"
+      method="post">
+    <table>
+        <tr>
+            <td>Login:</td>
+            <td><input type="text" th:field="*{login}"/></td>
+            <td th:if="${#fields.hasErrors('login')}" th:errors="*{login}"/>
+        </tr>
+        <tr>
+            <td>Password:</td>
+            <td><input type="text" th:field="*{password}"/></td>
+            <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}"/>
+            <input type="text" th:field="*{birthDate}"/>
+        </tr>
+        <tr>
+            <td>
+                <button type="submit">Sign up!</button>
+            </td>
+        </tr>
+    </table>
+</form>
 </body>
 </html>

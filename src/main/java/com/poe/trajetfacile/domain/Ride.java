@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Ride {
@@ -13,7 +14,7 @@ public class Ride {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     @Temporal(TemporalType.TIMESTAMP)
     private Date startDate;
 
@@ -22,6 +23,9 @@ public class Ride {
     @JsonIgnore
     @ManyToOne
     private User userWhoProposed;
+
+    @OneToMany(mappedBy = "ride")
+    private List<Booking> bookings;
 
     public Long getId() {
         return id;
@@ -53,5 +57,13 @@ public class Ride {
 
     public void setUserWhoProposed(User userWhoProposed) {
         this.userWhoProposed = userWhoProposed;
+    }
+
+    public List<Booking> getBookings() {
+        return bookings;
+    }
+
+    public void setBookings(List<Booking> bookings) {
+        this.bookings = bookings;
     }
 }

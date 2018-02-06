@@ -38,6 +38,9 @@ public class User {
     @OneToMany(mappedBy = "userWhoProposed")
     private List<Ride> proposedRides = new ArrayList<>();
 
+	@OneToMany(mappedBy = "user")
+	private List<Booking> bookings;
+
 	public Long getId() {
 		return id;
 	}
@@ -108,5 +111,13 @@ public class User {
 
 	public void setProposedRides(List<Ride> proposedRides) {
 		this.proposedRides = proposedRides;
+	}
+
+	public List<Booking> getBookings() {
+		return bookings;
+	}
+
+	public void setBookings(List<Booking> bookings) {
+		this.bookings = bookings;
 	}
 }

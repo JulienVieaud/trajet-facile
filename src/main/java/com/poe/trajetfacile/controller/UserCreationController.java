@@ -1,37 +1,54 @@
 package com.poe.trajetfacile.controller;
 
-import javax.validation.Valid;
-
+import com.poe.trajetfacile.domain.User;
+import com.poe.trajetfacile.form.UserCreationForm;
+import com.poe.trajetfacile.repository.UserRepository;
+import com.poe.trajetfacile.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.poe.trajetfacile.form.UserCreationForm;
+import javax.validation.Valid;
 
 @Controller
-public class UserCreationController extends WebMvcConfigurerAdapter {
+public class UserCreationController {
 
-	@Override
-	public void addViewControllers(ViewControllerRegistry registry) {
-		registry.addViewController("/results").setViewName("results");
-	}
+    @Autowired
+    private UserService userService;
 
-	@GetMapping("/")
-	public String showForm(UserCreationForm form) {
-		return "signup";
-	}
+    @Autowired
+    private UserRepository userRepository;
 
-	@PostMapping("/")
-	public String checkPersonInfo(@Valid UserCreationForm form, BindingResult bindingResult) {
+    @GetMapping("/")
+    public String showForm(UserCreationForm form) {
+        return "signup";
+    }
 
-		if (bindingResult.hasErrors()) {
-			return "signup";
-		}
+    @PostMapping("/")
+    public String save(@Valid UserCreationForm form, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
-		return "redirect:/results";
-	}
+        if (bindingResult.hasErrors()) {
+            return "signup";
+        }
+        User user = new User();
+        user.setLogin(form.getLogin());
+        user.setPassword(form.getPassword());
+        userService.signup(user);
+
+        redirectAttributes.addAttribute("userId", user.getId());
+        return "redirect:/home";
+    }
+
+    @GetMapping("/home")
+    public String home(@ModelAttribute("userId") Long userId, Model model) {
+        User user = userRepository.findOne(userId);
+        model.addAttribute("user", user);
+        return "home";
+    }
 
 }
