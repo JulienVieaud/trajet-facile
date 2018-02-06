@@ -15,10 +15,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    RideRepository rideRepository;
+    private RideRepository rideRepository;
 
     public void signup(User user) {
         userRepository.save(user);

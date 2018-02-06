@@ -18,7 +18,13 @@ public class Ride {
     @Temporal(TemporalType.TIMESTAMP)
     private Date startDate;
 
-    private int totalPlaces;
+    private String fromCity;
+
+    private String toCity;
+
+    private Double cost;
+
+    private Short seats;
 
     @JsonIgnore
     @ManyToOne
@@ -43,12 +49,36 @@ public class Ride {
         this.startDate = startDate;
     }
 
-    public int getTotalPlaces() {
-        return totalPlaces;
+    public String getFromCity() {
+        return fromCity;
     }
 
-    public void setTotalPlaces(int totalPlaces) {
-        this.totalPlaces = totalPlaces;
+    public void setFromCity(String fromCity) {
+        this.fromCity = fromCity;
+    }
+
+    public String getToCity() {
+        return toCity;
+    }
+
+    public void setToCity(String toCity) {
+        this.toCity = toCity;
+    }
+
+    public Double getCost() {
+        return cost;
+    }
+
+    public void setCost(Double cost) {
+        this.cost = cost;
+    }
+
+    public Short getSeats() {
+        return seats;
+    }
+
+    public void setSeats(Short seats) {
+        this.seats = seats;
     }
 
     public User getUserWhoProposed() {
