@@ -42,7 +42,7 @@
                 <td th:text="${ride.seats}"/>
                 <td th:text="${ride.cost}"/>
                 <input id="userId" name="userId"/>
-                <td><a class="button is-info" th:href="@{/book(ride=${ride.id}, user=#userId)}">je vais là!</a></td>
+                <td><a class="button is-info" th:href="@{/book(ride=${ride.id}, user=1)}">je vais là!</a></td>
             </tr>
         </table>
     </div>
