@@ -20,10 +20,6 @@
             <td th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}"/>
         </tr>
         <tr>
-            <td>Date de départ:</td>
-            <td><input type="datetime-local" th:field="*{fullDate}"/></td>
-        </tr>
-        <tr>
             <td>Horaire de départ:</td>
             <td><input type="number" th:field="*{startHours}"/></td>
             <td><input type="number" th:field="*{startMinutes}"/></td>

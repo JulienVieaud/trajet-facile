@@ -4,6 +4,7 @@ import com.poe.trajetfacile.domain.Ride;
 import com.poe.trajetfacile.form.OfferARideForm;
 import com.poe.trajetfacile.repository.RideRepository;
 import com.poe.trajetfacile.service.RideService;
+import com.poe.trajetfacile.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,8 +38,7 @@ public class RideManagerController {
             System.out.println(bindingResult.getAllErrors());
             return "ride/create";
         }
-//        Date convertedDateMinutePrecision = DateUtils.convert(form.getFullDate(), form.getStartHours(), form.getStartMinutes());
-        Date convertedDateMinutePrecision = form.getFullDate();
+        Date convertedDateMinutePrecision = DateUtils.convert(form.getFullDate(), form.getStartHours(), form.getStartMinutes());
         rideService.offerARide(convertedDateMinutePrecision, form.getFromCity(), form.getToCity(), form.getCost(), form.getSeats(), form.getUserId());
         model.addAttribute("message", "Votre trajet a bien été pris en compte.");
         return "ride/create";

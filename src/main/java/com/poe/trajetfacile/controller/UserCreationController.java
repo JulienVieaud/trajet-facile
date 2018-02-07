@@ -9,13 +9,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 
 @Controller
+@RequestMapping("/signup")
 public class UserCreationController {
 
     @Autowired
@@ -24,23 +25,22 @@ public class UserCreationController {
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping("/")
+    @GetMapping
     public String showForm(UserCreationForm form) {
-        System.out.println(form.getLogin());
-        return "signup";
+        return "user/signup";
     }
 
-    @PostMapping("/")
+    @PostMapping
     public String save(@Valid UserCreationForm form, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
 
         if (bindingResult.hasErrors()) {
-            return "signup";
+            return "user/signup";
         }
 
         if (userRepository.findByLogin(form.getLogin()) != null) {
             // on a déjà un utilisateur avec ce login
             model.addAttribute("duplicateLoginError", "Cet utilisateur existe déjà");
-            return "signup";
+            return "user/signup";
         }
 
         User user = new User();
@@ -49,14 +49,7 @@ public class UserCreationController {
         userService.signup(user);
 
         redirectAttributes.addAttribute("userId", user.getId());
-        return "redirect:/home";
-    }
-
-    @GetMapping("/home")
-    public String home(@ModelAttribute("userId") Long userId, Model model) {
-        User user = userRepository.findOne(userId);
-        model.addAttribute("user", user);
-        return "home";
+        return "user/signup";
     }
 
 }
