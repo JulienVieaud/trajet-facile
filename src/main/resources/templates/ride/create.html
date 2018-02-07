@@ -26,6 +26,16 @@
                     <td th:if="${#fields.hasErrors('userId')}" th:errors="*{userId}"/>
                 </tr>
                 <tr>
+                    <td>Ville de départ</td>
+                    <td><input type="date" th:field="*{fromCity}"/></td>
+                    <td th:if="${#fields.hasErrors('fromCity')}" th:errors="*{fromCity}"/>
+                </tr>
+                <tr>
+                    <td>Ville d'arrivée:</td>
+                    <td><input type="date" th:field="*{toCity}"/></td>
+                    <td th:if="${#fields.hasErrors('toCity')}" th:errors="*{toCity}"/>
+                </tr>
+                <tr>
                     <td>Jour de départ:</td>
                     <td><input type="date" th:field="*{startDate}"/></td>
                     <td th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}"/>

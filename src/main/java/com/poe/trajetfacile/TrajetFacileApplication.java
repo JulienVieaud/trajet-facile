@@ -27,7 +27,7 @@ public class TrajetFacileApplication {
             user.setPassword("pass");
             userRepository.save(user);
             user = new User();
-            user.setLogin("jean");
+            user.setLogin("marc");
             user.setPassword("pass");
             userRepository.save(user);
         };
