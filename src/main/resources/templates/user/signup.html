@@ -12,7 +12,7 @@
 
 <section class="section">
     <div class="container">
-        <form class="form" action="#" th:action="@{/}" th:object="${userCreationForm}"
+        <form class="form" action="#" th:action="@{/signup}" th:object="${userCreationForm}"
               method="post">
             <table>
                 <tr>
@@ -35,6 +35,9 @@
                 </tr>
             </table>
             <div th:text="${duplicateLoginError}"></div>
+            <div class="notification" th:if="${user != null}">
+                Bienvenue <span th:text="${user}"/> !!
+            </div>
         </form>
     </div>
 </section>

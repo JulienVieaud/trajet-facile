@@ -13,9 +13,6 @@ public class OfferARideForm {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date startDate;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-    private Date fullDate;
-
     private short startHours;
     private short startMinutes;
     private Double cost;
@@ -85,11 +82,4 @@ public class OfferARideForm {
         this.seats = seats;
     }
 
-    public Date getFullDate() {
-        return fullDate;
-    }
-
-    public void setFullDate(Date fullDate) {
-        this.fullDate = fullDate;
-    }
 }

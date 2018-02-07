@@ -1,25 +1,30 @@
-<html>
-<head>
-    <link rel="stylesheet" type="text/css" media="all"
-          href="/css/application.css" th:href="@{/css/application.css}"/>
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
+<head th:include="head :: linksFragment">
+    <title>Création d'un compte utilisateur - Trajet Facile</title>
 </head>
 <body>
+<div th:replace="layout :: navbarFragment">&nbsp;</div>
+<section class="section">
+    <div class="container">
 
-<table>
-    <tr>
-        <th>Départ</th>
-        <th>Arrivée</th>
-        <th>Nombre de places</th>
-        <th>Prix</th>
-    </tr>
-    <tr th:each="ride : ${rides}">
-        <td th:text="${ride.startDate}"/>
-        <td th:text="${ride.toCity}"/>
-        <td th:text="${ride.seats}"/>
-        <td th:text="${ride.cost}"/>
-    </tr>
-</table>
-
+        <table>
+            <tr>
+                <th>Départ</th>
+                <th>Arrivée</th>
+                <th>Nombre de places</th>
+                <th>Prix</th>
+            </tr>
+            <tr th:each="ride : ${rides}">
+                <td th:text="${ride.startDate}"/>
+                <td th:text="${ride.toCity}"/>
+                <td th:text="${ride.seats}"/>
+                <td th:text="${ride.cost}"/>
+            </tr>
+        </table>
+    </div>
+</section>
 </body>
+
 </html>

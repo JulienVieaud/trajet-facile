@@ -18,7 +18,7 @@ public class RideService {
     @Autowired
     private UserRepository userRepository;
 
-    public void offerARide(Date startDate, String fromCity, String toCity, Double cost, Short seats, Long userWhoProposed) {
+    public Ride offerARide(Date startDate, String fromCity, String toCity, Double cost, Short seats, Long userWhoProposed) {
 
         // TODO ...contrôles métiers
 
@@ -32,6 +32,8 @@ public class RideService {
         User user = userRepository.findOne(userWhoProposed);
         ride.setUserWhoProposed(user);
         rideRepository.save(ride);
+
+        return ride;
     }
 
 }

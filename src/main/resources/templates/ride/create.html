@@ -1,41 +1,56 @@
-<html>
-<head>
-    <link rel="stylesheet" type="text/css" media="all"
-          href="/css/application.css" th:href="@{/css/application.css}"/>
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
+<head th:include="head :: linksFragment">
+    <title>Création d'un compte utilisateur - Trajet Facile</title>
 </head>
 <body>
-<form action="#" th:action="@{/ride}" th:object="${offerARideForm}"
-      method="post">
-    <table>
-        <tr>
-            <td>User:</td>
-            <td><input type="number" th:field="*{userId}"/>
-            </td>
-            <td th:if="${#fields.hasErrors('userId')}" th:errors="*{userId}"/>
-        </tr>
-        <tr>
-            <td>Jour de départ:</td>
-            <td><input type="date" th:field="*{startDate}"/></td>
-            <td th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}"/>
-        </tr>
-        <tr>
-            <td>Horaire de départ:</td>
-            <td><input type="number" th:field="*{startHours}"/></td>
-            <td><input type="number" th:field="*{startMinutes}"/></td>
-            <td th:if="${#fields.hasErrors('startHours')}" th:errors="*{startHours}"/>
-            <td th:if="${#fields.hasErrors('startMinutes')}" th:errors="*{startMinutes}"/>
-        </tr>
-        <tr>
-            <td>
-                <button type="submit">Proposer un trajet</button>
-            </td>
-        </tr>
-    </table>
-    <div th:text="${message}" class="message-info"></div>
-    <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
-        <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+
+<div th:replace="layout :: navbarFragment">&nbsp;</div>
+<section class="section">
+    <div class="container">
+        <form action="#" th:action="@{/ride}" th:object="${offerARideForm}"
+              method="post">
+            <table>
+                <tr>
+                    <td>User:</td>
+                    <td>
+                        <select th:field="*{userId}">
+                            <option
+                                    th:each="user : ${users}"
+                                    th:value="${user.id}"
+                                    th:text="${user.login}"
+                            ></option>
+                        </select>
+                    </td>
+                    <td th:if="${#fields.hasErrors('userId')}" th:errors="*{userId}"/>
+                </tr>
+                <tr>
+                    <td>Jour de départ:</td>
+                    <td><input type="date" th:field="*{startDate}"/></td>
+                    <td th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}"/>
+                </tr>
+                <tr>
+                    <td>Horaire de départ:</td>
+                    <td><input type="number" th:field="*{startHours}"/></td>
+                    <td><input type="number" th:field="*{startMinutes}"/></td>
+                    <td th:if="${#fields.hasErrors('startHours')}" th:errors="*{startHours}"/>
+                    <td th:if="${#fields.hasErrors('startMinutes')}" th:errors="*{startMinutes}"/>
+                </tr>
+                <tr>
+                    <td>
+                        <button type="submit">Proposer un trajet</button>
+                    </td>
+                </tr>
+            </table>
+            <div th:if="${ride != null}" class="message-info">
+                Le trajet pour <span th:text="${ride.id}"/> a bien été pris en compte
+            </div>
+            <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
+                <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+            </div>
+        </form>
     </div>
-</form>
+</section>
 </body>
 </html>
