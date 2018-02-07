@@ -8,8 +8,28 @@
 <div th:replace="layout :: navbarFragment">&nbsp;</div>
 <section class="section">
     <div class="container">
+        <form class="form" action="#" th:action="@{/ride/search}" method="get">
+            <div class="field">
+                <div class="control">
+                    <div class="label">
+                        Rechercher
+                    </div>
+                    <input class="input" id="search" name="search" th:value="${search}"
+                           placeholder="Ville de départ ou d'arrivée..."/>
+                </div>
+            </div>
+            <div class="field">
+                <div class="control">
+                    <input class="button is-primary" type="submit" value="Rechercher"/>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
 
-        <table>
+<section class="section">
+    <div class="container">
+        <table class="table ">
             <tr>
                 <th>Départ</th>
                 <th>Arrivée</th>
@@ -17,10 +37,12 @@
                 <th>Prix</th>
             </tr>
             <tr th:each="ride : ${rides}">
-                <td th:text="${ride.startDate}"/>
+                <td th:text="${ride.fromCity}"/>
                 <td th:text="${ride.toCity}"/>
                 <td th:text="${ride.seats}"/>
                 <td th:text="${ride.cost}"/>
+                <input id="userId" name="userId"/>
+                <td><a class="button is-info" th:href="@{/book(ride=${ride.id}, user=#userId)}">je vais là!</a></td>
             </tr>
         </table>
     </div>

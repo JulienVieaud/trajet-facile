@@ -11,7 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
@@ -36,6 +39,7 @@ public class RideManagerController {
             Ride ride = rideRepository.findOne(Long.valueOf(rideId));
             model.addAttribute("ride", ride);
         }
+
         Iterable<User> users = userRepository.findAll();
         model.addAttribute("users", users);
         return "ride/create";
@@ -46,6 +50,8 @@ public class RideManagerController {
 
         if (bindingResult.hasErrors()) {
             System.out.println(bindingResult.getAllErrors());
+            Iterable<User> users = userRepository.findAll();
+            model.addAttribute("users", users);
             return "ride/create";
         }
         Date convertedDateMinutePrecision = DateUtils.convert(form.getStartDate(), form.getStartHours(), form.getStartMinutes());
@@ -56,9 +62,28 @@ public class RideManagerController {
 
     @GetMapping("list")
     public String list(Model model) {
-        Iterable<Ride> rides = rideRepository.findAll();
 
+        Iterable<Ride> rides;
+        rides = rideRepository.findAll();
         model.addAttribute("rides", rides);
         return "ride/list";
     }
+
+    @GetMapping("search")
+    public String search(Model model, @RequestParam(name = "search", required = true) String search) {
+
+        Iterable<Ride> rides;
+        System.out.println("searching " + search);
+        if (search != null && !search.isEmpty()) {
+            System.out.println("searching town for " + search);
+            rides = rideRepository.findAllByToCityLikeIgnoreCaseOrFromCityLikeIgnoreCase("%" + search + "%", "%" + search + "%");
+        } else {
+            rides = rideRepository.findAll();
+        }
+
+        model.addAttribute("rides", rides);
+        model.addAttribute("search", search);
+        return "ride/list";
+    }
+
 }
