@@ -8,6 +8,8 @@ import com.poe.trajetfacile.repository.UserRepository;
 import com.poe.trajetfacile.service.RideService;
 import com.poe.trajetfacile.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping("/ride")
@@ -84,6 +87,14 @@ public class RideManagerController {
         model.addAttribute("rides", rides);
         model.addAttribute("search", search);
         return "ride/list";
+    }
+
+
+    @MessageMapping("newRide")
+    @SendTo("/topic/newRide")
+    public List<Ride> listWebSocket() {
+        System.out.println("list web socket yeah !");
+        return null;
     }
 
 }
