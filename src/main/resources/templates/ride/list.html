@@ -30,21 +30,46 @@
 
 <section class="section">
     <div class="container">
+
+
         <table class="table ">
             <tr>
+                <th>Qui ?</th>
                 <th>Départ</th>
                 <th>Arrivée</th>
                 <th>Nombre de places</th>
                 <th>Prix</th>
             </tr>
             <tr th:each="ride : ${rides}">
-                <td th:text="${ride.fromCity}"/>
-                <td th:text="${ride.toCity}"/>
-                <td th:text="${ride.seats}"/>
-                <td th:text="${ride.cost}"/>
-                <td><a class="button is-info" th:href="@{/book(ride=${ride.id}, user=1)}">je vais là!</a></td>
+                <form th:id="'form' + ${ride.id}" action="#" th:action="@{/book}" th:object="${bookARideForm}"
+                      th:method="POST">
+                    <input type="hidden" th:value="${ride.id}" name="rideId" th:id="'rideId' + ${ride.id}"/>
+                    <td>
+                        <select th:field="*{userId}">
+                            <option
+                                    th:each="user : ${users}"
+                                    th:value="${user.id}"
+                                    th:text="${user.login}"
+                            ></option>
+                        </select>
+                    </td>
+
+                    <td th:text="${ride.fromCity}"/>
+                    <td th:text="${ride.toCity}"/>
+                    <td th:text="${ride.seats}"/>
+                    <td th:text="${ride.cost}"/>
+                    <td>
+                        <button type="submit" class="button is-info">je vais là!</button>
+                    </td>
+                </form>
             </tr>
         </table>
+        <div th:if="${message!= null}" class="message-info">
+            <div class="notification is-alert">
+                <span th:text="${message}"/>
+            </div>
+        </div>
+
     </div>
 </section>
 

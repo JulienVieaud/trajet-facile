@@ -1,6 +1,7 @@
 package com.poe.trajetfacile.repository;
 
 import com.poe.trajetfacile.domain.Ride;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

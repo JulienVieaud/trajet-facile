@@ -1,8 +1,8 @@
 package com.poe.trajetfacile.controller;
 
 import com.poe.trajetfacile.domain.Booking;
-import com.poe.trajetfacile.domain.Ride;
-import com.poe.trajetfacile.domain.User;
+import com.poe.trajetfacile.exception.RideIsFullBusinessException;
+import com.poe.trajetfacile.form.BookARideForm;
 import com.poe.trajetfacile.repository.RideRepository;
 import com.poe.trajetfacile.repository.UserRepository;
 import com.poe.trajetfacile.service.BookingService;
@@ -10,9 +10,12 @@ import com.poe.trajetfacile.service.RideService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/book")
@@ -30,12 +33,20 @@ public class BookingController {
     @Autowired
     BookingService bookingService;
 
-    @GetMapping
-    public String bookARide(@RequestParam(name = "ride") String rideId, @RequestParam(name = "user") String userId, Model model) {
-        if (rideId != null && !rideId.isEmpty()) {
-            Booking booking = bookingService.bookARide(Long.valueOf(userId), Long.valueOf(rideId));
-            model.addAttribute("book", booking);
+    @PostMapping
+    public String bookARide(@Valid BookARideForm form, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            return "redirect:/ride/list";
         }
+
+        Booking booking = null;
+        try {
+            booking = bookingService.bookARide(form.getUserId(), form.getRideId());
+        } catch (RideIsFullBusinessException e) {
+            redirectAttributes.addFlashAttribute("message", "Ce trajet est déjà complet.");
+            return "redirect:/ride/list";
+        }
+        model.addAttribute("book", booking);
         return "ride/booked";
     }
 }

@@ -1,6 +1,7 @@
 package com.poe.trajetfacile.api;
 
 import com.poe.trajetfacile.domain.Booking;
+import com.poe.trajetfacile.exception.RideIsFullBusinessException;
 import com.poe.trajetfacile.repository.BookingRepository;
 import com.poe.trajetfacile.service.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class BookingApiController {
     }
 
     @PostMapping("{userId}/{rideId}")
-    public void save(@PathVariable("userId") Long userId, @PathVariable("rideId") Long rideId) {
+    public void save(@PathVariable("userId") Long userId, @PathVariable("rideId") Long rideId) throws RideIsFullBusinessException {
         bookingService.bookARide(userId, rideId);
     }
 

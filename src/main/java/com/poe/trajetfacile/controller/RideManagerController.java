@@ -2,6 +2,7 @@ package com.poe.trajetfacile.controller;
 
 import com.poe.trajetfacile.domain.Ride;
 import com.poe.trajetfacile.domain.User;
+import com.poe.trajetfacile.form.BookARideForm;
 import com.poe.trajetfacile.form.OfferARideForm;
 import com.poe.trajetfacile.repository.RideRepository;
 import com.poe.trajetfacile.repository.UserRepository;
@@ -13,10 +14,7 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
@@ -63,16 +61,20 @@ public class RideManagerController {
     }
 
     @GetMapping("list")
-    public String list(Model model) {
+    public String list(BookARideForm form, @ModelAttribute(value = "message") String message, Model model) {
 
         Iterable<Ride> rides;
         rides = rideRepository.findAll();
+        Iterable<User> users = userRepository.findAll();
+
         model.addAttribute("rides", rides);
+        model.addAttribute("users", users);
+        model.addAttribute("message", message);
         return "ride/list";
     }
 
     @GetMapping("search")
-    public String search(Model model, @RequestParam(name = "search", required = true) String search) {
+    public String search(Model model, @RequestParam(name = "search", required = true) String search, BookARideForm form) {
 
         Iterable<Ride> rides;
         System.out.println("searching " + search);
@@ -83,6 +85,9 @@ public class RideManagerController {
             rides = rideRepository.findAll();
         }
 
+        Iterable<User> users = userRepository.findAll();
+
+        model.addAttribute("users", users);
         model.addAttribute("rides", rides);
         model.addAttribute("search", search);
         return "ride/list";
