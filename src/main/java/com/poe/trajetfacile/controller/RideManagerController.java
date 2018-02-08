@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.Date;
 
 @Controller
@@ -34,7 +35,7 @@ public class RideManagerController {
     private UserRepository userRepository;
 
     @GetMapping
-    public String showForm(User user, OfferARideForm form, @RequestParam(name = "ride", required = false) String rideId, Model model) {
+    public String showForm(OfferARideForm form, @RequestParam(name = "ride", required = false) String rideId, Model model) {
         if (rideId != null && !rideId.isEmpty()) {
             Ride ride = rideRepository.findOne(Long.valueOf(rideId));
             model.addAttribute("ride", ride);
@@ -46,8 +47,9 @@ public class RideManagerController {
     }
 
     @PostMapping
-    public String offerARide(@Valid OfferARideForm form, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+    public String offerARide(@Valid OfferARideForm form, BindingResult bindingResult, Principal principal, Model model, RedirectAttributes redirectAttributes) {
 
+        System.out.println("LoggedIn user : " + principal.getName());
         if (bindingResult.hasErrors()) {
             System.out.println(bindingResult.getAllErrors());
             Iterable<User> users = userRepository.findAll();

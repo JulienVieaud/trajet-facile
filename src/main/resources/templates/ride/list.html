@@ -65,8 +65,8 @@
             </tr>
         </table>
         <div th:if="${message!= null}" class="message-info">
-            <div class="notification is-alert">
-                <span th:text="${message}"/>
+            <div th:if="${message!= null}" class="notification is-alert">
+                <span th:if="${message!= null}" th:text="${message}"/>
             </div>
         </div>
 

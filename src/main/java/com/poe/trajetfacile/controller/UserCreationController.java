@@ -5,6 +5,7 @@ import com.poe.trajetfacile.form.UserCreationForm;
 import com.poe.trajetfacile.repository.UserRepository;
 import com.poe.trajetfacile.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
