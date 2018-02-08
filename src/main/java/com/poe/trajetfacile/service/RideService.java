@@ -5,6 +5,7 @@ import com.poe.trajetfacile.domain.User;
 import com.poe.trajetfacile.repository.RideRepository;
 import com.poe.trajetfacile.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -17,6 +18,9 @@ public class RideService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private SimpMessagingTemplate template;
 
     public Ride offerARide(Date startDate, String fromCity, String toCity, Double cost, Short seats, Long userWhoProposed) {
 
@@ -33,6 +37,8 @@ public class RideService {
         ride.setUserWhoProposed(user);
         rideRepository.save(ride);
 
+        System.out.println("sending event");
+        template.convertAndSend("/topic/newRide", ride);
         return ride;
     }
 

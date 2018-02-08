@@ -24,6 +24,10 @@ public class BookingService {
     public Booking bookARide(Long userId, Long rideId) {
         User user = userRepository.findOne(userId);
         Ride ride = rideRepository.findOne(rideId);
+
+        if (ride.getSeats() > 0) {
+            ride.setSeats((short) (ride.getSeats() - 1));
+        }
         Booking booking = new Booking();
         booking.setUser(user);
         booking.setRide(ride);

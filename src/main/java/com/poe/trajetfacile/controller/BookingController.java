@@ -34,10 +34,8 @@ public class BookingController {
     public String bookARide(@RequestParam(name = "ride") String rideId, @RequestParam(name = "user") String userId, Model model) {
         if (rideId != null && !rideId.isEmpty()) {
             Booking booking = bookingService.bookARide(Long.valueOf(userId), Long.valueOf(rideId));
-            model.addAttribute("booking", booking);
+            model.addAttribute("book", booking);
         }
-        return "ride/create";
+        return "ride/booked";
     }
-
-
 }

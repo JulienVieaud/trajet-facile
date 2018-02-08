@@ -21,7 +21,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.Date;
-import java.util.List;
 
 @Controller
 @RequestMapping("/ride")
@@ -92,9 +91,10 @@ public class RideManagerController {
 
     @MessageMapping("newRide")
     @SendTo("/topic/newRide")
-    public List<Ride> listWebSocket() {
-        System.out.println("list web socket yeah !");
-        return null;
+    public Ride newRideNotification(Ride ride) {
+        System.out.println("new ride on air ! " + ride.getId());
+        return ride;
     }
+
 
 }
