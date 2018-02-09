@@ -76,6 +76,15 @@ public class RideManagerController {
         return "ride/list";
     }
 
+
+    @GetMapping("{id}")
+    public String find(@PathVariable(value = "id") String rideId, BookARideForm bookARideForm, Model model) {
+
+        Ride ride = rideRepository.findOne(Long.valueOf(rideId));
+        model.addAttribute("ride", ride);
+        return "ride/rideline";
+    }
+
     @GetMapping("search")
     public String search(Model model, @RequestParam(name = "search", required = true) String search, BookARideForm form) {
 
@@ -90,15 +99,30 @@ public class RideManagerController {
 
         Iterable<User> users = userRepository.findAll();
 
-        model.addAttribute("users", users);
         model.addAttribute("rides", rides);
         model.addAttribute("search", search);
-        return "ride/list";
+        return "ride/list"
+                ;
+    }
+    @GetMapping("searchAjax")
+    public String searchAjax(Model model, @RequestParam(name = "search", required = true) String search) {
+        Iterable<Ride> rides;
+        System.out.println("searching " + search);
+        if (search != null && !search.isEmpty()) {
+            System.out.println("searching town for " + search);
+            rides = rideRepository.findAllByToCityLikeIgnoreCaseOrFromCityLikeIgnoreCase("%" + search + "%", "%" + search + "%");
+        } else {
+            rides = rideRepository.findAll();
+        }
+
+        Iterable<User> users = userRepository.findAll();
+        model.addAttribute("rides", rides);
+        return "ride/rides";
     }
 
 
-    @MessageMapping("newRide")
-    @SendTo("/topic/newRide")
+    @MessageMapping("/newRide") // écoute sur ce canal
+    @SendTo("/topic/resp") // répond sur ce canal
     public Ride newRideNotification(Ride ride) {
         System.out.println("new ride on air ! " + ride.getId());
         return ride;

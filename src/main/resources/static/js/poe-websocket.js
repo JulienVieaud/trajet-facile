@@ -1,7 +1,5 @@
 $(document).ready(function () {
     var stompClient = null;
-
-    console.log('trying: ');
     var socket = new SockJS('/poe-websocket');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
@@ -18,7 +16,39 @@ $(document).ready(function () {
 
     function updateRide(message) {
         console.log(message);
-        $("#rides").append("<tr><td>" + message.fromCity + "</td></tr>");
+        var tableRides = $("#rides");
+        var htmlRideLine;
+
+        $.ajax({
+            url: "/ride/" + message.id,
+            datatype: "html",
+            type: 'GET',
+            success: function (html, status) {
+                tableRides.append("<tr>" + html + "</tr>");
+            }
+        });
     }
+
+    $("#search").on("keyup", function () {
+        var txt = $("#search").val();
+        delay(function () {
+            $.ajax({
+                url: "/ride/searchAjax?search=" + txt,
+                datatype: "html",
+                type: 'GET',
+                success: function (html, status) {
+                    $("#rides").html(html);
+                }
+            });
+        }, 150);
+    });
+
+    var delay = (function () {
+        var timer = 0;
+        return function (callback, ms) {
+            clearTimeout(timer);
+            timer = setTimeout(callback, ms);
+        };
+    })();
 
 });

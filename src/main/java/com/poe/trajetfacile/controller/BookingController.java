@@ -1,6 +1,7 @@
 package com.poe.trajetfacile.controller;
 
 import com.poe.trajetfacile.domain.Booking;
+import com.poe.trajetfacile.domain.User;
 import com.poe.trajetfacile.exception.RideIsFullBusinessException;
 import com.poe.trajetfacile.form.BookARideForm;
 import com.poe.trajetfacile.repository.RideRepository;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
 @RequestMapping("/book")
@@ -34,14 +36,14 @@ public class BookingController {
     BookingService bookingService;
 
     @PostMapping
-    public String bookARide(@Valid BookARideForm form, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+    public String bookARide(Principal principal, @Valid BookARideForm form, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             return "redirect:/ride/list";
         }
-
+        User user = userRepository.findByLogin(principal.getName());
         Booking booking = null;
         try {
-            booking = bookingService.bookARide(form.getUserId(), form.getRideId());
+            booking = bookingService.bookARide(user.getId(), form.getRideId());
         } catch (RideIsFullBusinessException e) {
             redirectAttributes.addFlashAttribute("message", "Ce trajet est déjà complet.");
             return "redirect:/ride/list";

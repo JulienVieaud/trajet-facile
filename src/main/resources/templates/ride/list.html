@@ -1,7 +1,22 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
-<head th:include="head :: linksFragment">
+<head>
+
+    <meta charset="UTF-8"/>
+    <title>Trajet Facile</title>
+    <link rel="stylesheet" type="text/css" media="all"
+          href="/css/application.css" th:href="@{/css/application.css}"/>
+    <link rel="stylesheet" type="text/css" media="all"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css"/>
+    <link rel="stylesheet" type="text/css" media="all"
+          href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+    <script src="/js/poe-websocket.js"></script>
 
 </head>
 
@@ -9,8 +24,8 @@
 <div th:replace="layout :: navbarFragment">&nbsp;</div>
 <section class="section">
     <div class="container">
-        <div class="columns is-centered">
-            <div class="column is-two-third">
+        <div class="columns ">
+            <div class="column is-one-quarter">
 
                 <form class="form" action="#" th:action="@{/ride/search}" method="get">
                     <div class="field">
@@ -29,42 +44,16 @@
                     </div>
                 </form>
             </div>
-        </div>
-    </div>
-</section>
-
-<section class="section">
-    <div class="container ">
-        <div class="columns is-centered">
-            <div class="column is-one-quarter">
-
-                <table id="rides" class="table ">
-                    <tr>
-                        <th>Départ</th>
-                        <th>Arrivée</th>
-                        <th>Nombre de places</th>
-                        <th>Prix</th>
-                    </tr>
-                    <tr th:each="ride : ${rides}">
-                        <form th:id="'form' + ${ride.id}" action="#" th:action="@{/book}" th:object="${bookARideForm}"
-                              th:method="POST">
-                            <input type="hidden" th:value="${ride.id}" name="rideId" th:id="'rideId' + ${ride.id}"/>
-                            <td th:text="${ride.fromCity}"/>
-                            <td th:text="${ride.toCity}"/>
-                            <td th:text="${ride.seats}"/>
-                            <td th:text="${ride.cost}"/>
-                            <td>
-                                <button type="submit" class="button is-info">je vais là!</button>
-                            </td>
-                        </form>
-                    </tr>
+            <div class="column is-three-quarter">
+                <table id="rides" class="table is-fullwidth">
+                    <div th:replace="ride/rides :: rides(${rides})"/>
                 </table>
-                <div th:if="${message!= null}" class="message-info">
-                    <div th:if="${message!= null}" class="notification is-alert">
+
+                <div th:if="${message!= null} and ${!message.isEmpty()}" class="message-info">
+                    <div th:if="${message!= null} and ${!message.isEmpty()}" class="notification is-alert">
                         <span th:if="${message!= null}" th:text="${message}"/>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
