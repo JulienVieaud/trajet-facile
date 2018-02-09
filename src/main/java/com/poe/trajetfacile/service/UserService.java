@@ -1,5 +1,6 @@
 package com.poe.trajetfacile.service;
 
+import com.poe.trajetfacile.aop.Chrono;
 import com.poe.trajetfacile.domain.Ride;
 import com.poe.trajetfacile.domain.User;
 import com.poe.trajetfacile.repository.RideRepository;
@@ -27,7 +28,7 @@ public class UserService {
     @Autowired
     private InMemoryUserDetailsManager inMemoryUserDetailsManager;
 
-
+    @Chrono
     public void signup(User user) {
         userRepository.save(user);
         try {
@@ -37,6 +38,7 @@ public class UserService {
         }
     }
 
+    @Chrono
     @Transactional
     public void addRide(Long userId, Long rideId) {
         User user = userRepository.findOne(userId);

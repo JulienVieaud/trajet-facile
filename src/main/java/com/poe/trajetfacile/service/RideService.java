@@ -1,5 +1,6 @@
 package com.poe.trajetfacile.service;
 
+import com.poe.trajetfacile.aop.Chrono;
 import com.poe.trajetfacile.domain.Ride;
 import com.poe.trajetfacile.domain.User;
 import com.poe.trajetfacile.repository.RideRepository;
@@ -22,6 +23,7 @@ public class RideService {
     @Autowired
     private SimpMessagingTemplate template;
 
+    @Chrono
     public Ride offerARide(Date startDate, String fromCity, String toCity, Double cost, Short seats, Long userWhoProposed) {
 
         // TODO ...contrôles métiers

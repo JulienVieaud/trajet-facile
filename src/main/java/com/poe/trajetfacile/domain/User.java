@@ -1,18 +1,11 @@
 package com.poe.trajetfacile.domain;
 
+import org.hibernate.validator.constraints.NotBlank;
+
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 public class User {
@@ -24,7 +17,6 @@ public class User {
     @NotBlank
     private String login;
 
-    @NotBlank
     private String password;
 
     private String firstName;
@@ -38,86 +30,86 @@ public class User {
     @OneToMany(mappedBy = "userWhoProposed")
     private List<Ride> proposedRides = new ArrayList<>();
 
-	@OneToMany(mappedBy = "user")
-	private List<Booking> bookings;
+    @OneToMany(mappedBy = "user")
+    private List<Booking> bookings;
 
-	public Long getId() {
-		return id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public String getLogin() {
-		return login;
-	}
+    public String getLogin() {
+        return login;
+    }
 
-	public void setLogin(String login) {
-		this.login = login;
-	}
+    public void setLogin(String login) {
+        this.login = login;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public String getFirstName() {
+        return firstName;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-	public String getFirstName() {
-		return firstName;
-	}
+    public String getLastName() {
+        return lastName;
+    }
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-	public String getLastName() {
-		return lastName;
-	}
+    public Date getBirthDate() {
+        return birthDate;
+    }
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
+    }
 
-	public Date getBirthDate() {
-		return birthDate;
-	}
+    public String getRating() {
+        return rating;
+    }
 
-	public void setBirthDate(Date birthDate) {
-		this.birthDate = birthDate;
-	}
+    public void setRating(String rating) {
+        this.rating = rating;
+    }
 
-	public String getRating() {
-		return rating;
-	}
+    public Boolean getConfirmed() {
+        return confirmed;
+    }
 
-	public void setRating(String rating) {
-		this.rating = rating;
-	}
+    public void setConfirmed(Boolean confirmed) {
+        this.confirmed = confirmed;
+    }
 
-	public Boolean getConfirmed() {
-		return confirmed;
-	}
+    public List<Ride> getProposedRides() {
+        return proposedRides;
+    }
 
-	public void setConfirmed(Boolean confirmed) {
-		this.confirmed = confirmed;
-	}
+    public void setProposedRides(List<Ride> proposedRides) {
+        this.proposedRides = proposedRides;
+    }
 
-	public List<Ride> getProposedRides() {
-		return proposedRides;
-	}
+    public List<Booking> getBookings() {
+        return bookings;
+    }
 
-	public void setProposedRides(List<Ride> proposedRides) {
-		this.proposedRides = proposedRides;
-	}
+    public void setBookings(List<Booking> bookings) {
+        this.bookings = bookings;
+    }
 
-	public List<Booking> getBookings() {
-		return bookings;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public void setBookings(List<Booking> bookings) {
-		this.bookings = bookings;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

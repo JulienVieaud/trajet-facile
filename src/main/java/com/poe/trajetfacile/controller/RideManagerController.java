@@ -35,11 +35,13 @@ public class RideManagerController {
     private UserRepository userRepository;
 
     @GetMapping
-    public String showForm(OfferARideForm form, @RequestParam(name = "ride", required = false) String rideId, Model model) {
+    public String showForm(OfferARideForm form, @RequestParam(name = "ride", required = false) String rideId, Principal principal, Model model) {
         if (rideId != null && !rideId.isEmpty()) {
             Ride ride = rideRepository.findOne(Long.valueOf(rideId));
             model.addAttribute("ride", ride);
         }
+        System.out.println("LoggedIn user : " + principal.getName());
+
 
         Iterable<User> users = userRepository.findAll();
         model.addAttribute("users", users);
@@ -49,15 +51,14 @@ public class RideManagerController {
     @PostMapping
     public String offerARide(@Valid OfferARideForm form, BindingResult bindingResult, Principal principal, Model model, RedirectAttributes redirectAttributes) {
 
-        System.out.println("LoggedIn user : " + principal.getName());
+        User user = userRepository.findByLogin(principal.getName());
+
         if (bindingResult.hasErrors()) {
             System.out.println(bindingResult.getAllErrors());
-            Iterable<User> users = userRepository.findAll();
-            model.addAttribute("users", users);
             return "ride/create";
         }
         Date convertedDateMinutePrecision = DateUtils.convert(form.getStartDate(), form.getStartHours(), form.getStartMinutes());
-        Ride ride = rideService.offerARide(convertedDateMinutePrecision, form.getFromCity(), form.getToCity(), form.getCost(), form.getSeats(), form.getUserId());
+        Ride ride = rideService.offerARide(convertedDateMinutePrecision, form.getFromCity(), form.getToCity(), form.getCost(), form.getSeats(), user.getId());
         redirectAttributes.addAttribute("ride", ride.getId());
         return "redirect:/ride";
     }

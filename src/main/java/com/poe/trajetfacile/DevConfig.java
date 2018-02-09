@@ -2,7 +2,7 @@ package com.poe.trajetfacile;
 
 import com.poe.trajetfacile.domain.User;
 import com.poe.trajetfacile.repository.RideRepository;
-import com.poe.trajetfacile.repository.UserRepository;
+import com.poe.trajetfacile.service.UserService;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Profile;
 public class DevConfig {
 
     @Autowired
-    UserRepository userRepository;
+    UserService userService;
 
     @Autowired
     RideRepository rideRepository;
@@ -25,13 +25,13 @@ public class DevConfig {
             System.out.println("init");
             User user = new User();
             user.setLogin("jean");
-            user.setPassword("pass");
-            userRepository.save(user);
+            user.setPassword("jean");
+            userService.signup(user);
 
             user = new User();
             user.setLogin("marc");
-            user.setPassword("pass");
-            userRepository.save(user);
+            user.setPassword("marc");
+            userService.signup(user);
 
 
         };

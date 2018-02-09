@@ -21,19 +21,6 @@
               method="post">
             <table>
                 <tr>
-                    <td>User:</td>
-                    <td>
-                        <select th:field="*{userId}">
-                            <option
-                                    th:each="user : ${users}"
-                                    th:value="${user.id}"
-                                    th:text="${user.login}"
-                            ></option>
-                        </select>
-                    </td>
-                    <td th:if="${#fields.hasErrors('userId')}" th:errors="*{userId}"/>
-                </tr>
-                <tr>
                     <td>Ville de départ</td>
                     <td><input type="text" th:field="*{fromCity}"/></td>
                     <td th:if="${#fields.hasErrors('fromCity')}" th:errors="*{fromCity}"/>

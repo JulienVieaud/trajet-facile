@@ -1,5 +1,7 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+>
+
 <body>
 
 <nav class="navbar is-info" role="navigation" aria-label="main navigation" th:fragment="navbarFragment">
@@ -20,17 +22,20 @@
         </div>
 
         <div class="navbar-end">
-            <a class="navbar-item" th:href="@{/signup}">
+            <a class="navbar-item" th:href="@{/signup}" th:if="${#httpServletRequest.remoteUser == null}">
                 Inscription
             </a>
+
+            <a class="navbar-item" th:href="@{/logout}" th:if="${#httpServletRequest.remoteUser != null}">
+                <span th:text="${#authentication.getPrincipal().getUsername()}"></span> - Déconnexion
+            </a>
+
+            <a class="navbar-item" th:href="@{/login}" th:if="${#httpServletRequest.remoteUser == null}">
+                Connexion
+            </a>
         </div>
-        <a class="navbar-item" th:href="@{/signup}" th:disabled="true">
-            Connexion
-        </a>
 
     </div>
-
 </nav>
-
 </body>
 </html>

@@ -24,6 +24,9 @@ public class UserCreationController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    AuthenticationManagerBuilder authenticationManagerBuilder;
+
     @GetMapping
     public String showForm(UserCreationForm form, @RequestParam(name = "user", required = false) String userId, @ModelAttribute("attr") String attr, Model model) {
         if (userId != null) {

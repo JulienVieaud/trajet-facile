@@ -12,13 +12,13 @@ public class WebMvcContext extends WebMvcConfigurerAdapter {
 
     @Override
     public void addFormatters(FormatterRegistry registry) {
-        registry.addConverter(new DatetimeConverter("yyyy-MM-dd'T'HH:mm:ss.SSS"));
+//        registry.addConverter(new DatetimeConverter("yyyy-MM-dd'T'HH:mm:ss.SSS"));
     }
 
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addRedirectViewController("/", "/signup");
+        registry.addRedirectViewController("/", "/ride");
 
     }
 }

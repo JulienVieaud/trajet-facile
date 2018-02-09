@@ -6,7 +6,6 @@ import java.util.Date;
 
 public class OfferARideForm {
 
-    private Long userId;
     private String fromCity;
     private String toCity;
 
@@ -17,14 +16,6 @@ public class OfferARideForm {
     private short startMinutes;
     private Double cost;
     private short seats;
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
 
     public String getFromCity() {
         return fromCity;
