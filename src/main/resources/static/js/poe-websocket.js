@@ -7,7 +7,8 @@ $(document).ready(function () {
     stompClient.connect({}, function (frame) {
         console.log('Connected: ' + frame);
         stompClient.subscribe('/topic/newRide', function (ride) {
-            updateRide(JSON.parse(ride.body).content);
+            var jsonObject = JSON.parse(ride.body);
+            updateRide(jsonObject);
         });
     });
 
@@ -16,7 +17,8 @@ $(document).ready(function () {
     }
 
     function updateRide(message) {
-        $("#greetings").append("<tr><td>" + message + "</td></tr>");
+        console.log(message);
+        $("#rides").append("<tr><td>" + message.fromCity + "</td></tr>");
     }
 
 });

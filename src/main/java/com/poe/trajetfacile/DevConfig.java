@@ -1,6 +1,7 @@
 package com.poe.trajetfacile;
 
 import com.poe.trajetfacile.domain.User;
+import com.poe.trajetfacile.jdbc.UserDao;
 import com.poe.trajetfacile.repository.RideRepository;
 import com.poe.trajetfacile.service.UserService;
 import org.springframework.beans.factory.InitializingBean;
@@ -19,6 +20,9 @@ public class DevConfig {
     @Autowired
     RideRepository rideRepository;
 
+    @Autowired
+    UserDao userDao;
+
     @Bean
     public InitializingBean init() {
         return () -> {
@@ -33,6 +37,7 @@ public class DevConfig {
             user.setPassword("marc");
             userService.signup(user);
 
+            userDao.batchInsert();
 
         };
     }

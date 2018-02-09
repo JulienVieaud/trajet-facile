@@ -9,65 +9,64 @@
 <div th:replace="layout :: navbarFragment">&nbsp;</div>
 <section class="section">
     <div class="container">
-        <form class="form" action="#" th:action="@{/ride/search}" method="get">
-            <div class="field">
-                <div class="control">
-                    <div class="label">
-                        Rechercher
+        <div class="columns is-centered">
+            <div class="column is-two-third">
+
+                <form class="form" action="#" th:action="@{/ride/search}" method="get">
+                    <div class="field">
+                        <div class="control">
+                            <div class="label">
+                                Rechercher
+                            </div>
+                            <input class="input" id="search" name="search" th:value="${search}"
+                                   placeholder="Ville de départ ou d'arrivée..."/>
+                        </div>
                     </div>
-                    <input class="input" id="search" name="search" th:value="${search}"
-                           placeholder="Ville de départ ou d'arrivée..."/>
-                </div>
+                    <div class="field">
+                        <div class="control">
+                            <input class="button is-primary" type="submit" value="Rechercher"/>
+                        </div>
+                    </div>
+                </form>
             </div>
-            <div class="field">
-                <div class="control">
-                    <input class="button is-primary" type="submit" value="Rechercher"/>
-                </div>
-            </div>
-        </form>
+        </div>
     </div>
 </section>
 
 <section class="section">
-    <div class="container">
-        <table class="table ">
-            <tr>
-                <th>Qui ?</th>
-                <th>Départ</th>
-                <th>Arrivée</th>
-                <th>Nombre de places</th>
-                <th>Prix</th>
-            </tr>
-            <tr th:each="ride : ${rides}">
-                <form th:id="'form' + ${ride.id}" action="#" th:action="@{/book}" th:object="${bookARideForm}"
-                      th:method="POST">
-                    <input type="hidden" th:value="${ride.id}" name="rideId" th:id="'rideId' + ${ride.id}"/>
-                    <td>
-                        <select th:field="*{userId}">
-                            <option
-                                    th:each="user : ${users}"
-                                    th:value="${user.id}"
-                                    th:text="${user.login}"
-                            ></option>
-                        </select>
-                    </td>
+    <div class="container ">
+        <div class="columns is-centered">
+            <div class="column is-one-quarter">
 
-                    <td th:text="${ride.fromCity}"/>
-                    <td th:text="${ride.toCity}"/>
-                    <td th:text="${ride.seats}"/>
-                    <td th:text="${ride.cost}"/>
-                    <td>
-                        <button type="submit" class="button is-info">je vais là!</button>
-                    </td>
-                </form>
-            </tr>
-        </table>
-        <div th:if="${message!= null}" class="message-info">
-            <div th:if="${message!= null}" class="notification is-alert">
-                <span th:if="${message!= null}" th:text="${message}"/>
+                <table id="rides" class="table ">
+                    <tr>
+                        <th>Départ</th>
+                        <th>Arrivée</th>
+                        <th>Nombre de places</th>
+                        <th>Prix</th>
+                    </tr>
+                    <tr th:each="ride : ${rides}">
+                        <form th:id="'form' + ${ride.id}" action="#" th:action="@{/book}" th:object="${bookARideForm}"
+                              th:method="POST">
+                            <input type="hidden" th:value="${ride.id}" name="rideId" th:id="'rideId' + ${ride.id}"/>
+                            <td th:text="${ride.fromCity}"/>
+                            <td th:text="${ride.toCity}"/>
+                            <td th:text="${ride.seats}"/>
+                            <td th:text="${ride.cost}"/>
+                            <td>
+                                <button type="submit" class="button is-info">je vais là!</button>
+                            </td>
+                        </form>
+                    </tr>
+                </table>
+                <div th:if="${message!= null}" class="message-info">
+                    <div th:if="${message!= null}" class="notification is-alert">
+                        <span th:if="${message!= null}" th:text="${message}"/>
+                    </div>
+                </div>
+
             </div>
         </div>
-
     </div>
 </section>
 
