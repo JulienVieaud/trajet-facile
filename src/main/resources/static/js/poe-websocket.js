@@ -16,7 +16,7 @@ $(document).ready(function () {
 
     function updateRide(message) {
         console.log(message);
-        var tableRides = $("#rides");
+        var tableRides = $("#ridesTab");
         var htmlRideLine;
 
         $.ajax({
@@ -24,6 +24,7 @@ $(document).ready(function () {
             datatype: "html",
             type: 'GET',
             success: function (html, status) {
+                console.log("ajout d'un formulaire ..........." + html);
                 tableRides.append("<tr>" + html + "</tr>");
             }
         });
@@ -31,16 +32,16 @@ $(document).ready(function () {
 
     $("#search").on("keyup", function () {
         var txt = $("#search").val();
-        delay(function () {
+        delay(function () { // on attend quelques millisecondes avant d'envoyer la requête Ajax
             $.ajax({
                 url: "/ride/searchAjax?search=" + txt,
                 datatype: "html",
                 type: 'GET',
                 success: function (html, status) {
-                    $("#rides").html(html);
+                    $("#ridesTab").html(html);
                 }
             });
-        }, 150);
+        }, 50);
     });
 
     var delay = (function () {

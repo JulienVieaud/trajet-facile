@@ -45,7 +45,13 @@
                 </form>
             </div>
             <div class="column is-three-quarter">
-                <table id="rides" class="table is-fullwidth">
+                <table id="ridesTab" class="table is-fullwidth">
+                    <tr>
+                        <th>Départ</th>
+                        <th>Arrivée</th>
+                        <th>Nombre de places</th>
+                        <th>Prix</th>
+                    </tr>
                     <div th:replace="ride/rides :: rides(${rides})"/>
                 </table>
 

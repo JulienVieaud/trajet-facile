@@ -79,7 +79,6 @@ public class RideManagerController {
 
     @GetMapping("{id}")
     public String find(@PathVariable(value = "id") String rideId, BookARideForm bookARideForm, Model model) {
-
         Ride ride = rideRepository.findOne(Long.valueOf(rideId));
         model.addAttribute("ride", ride);
         return "ride/rideline";

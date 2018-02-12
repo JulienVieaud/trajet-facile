@@ -1,5 +1,5 @@
 <div th:fragment="rideline(ride)">
-    <form th:id="'form' + ${ride.id}" action="#" th:action="@{/book}" th:object="${bookARideForm}"
+    <form th:id="'form' + ${ride.id}" th:action="@{/book}" th:object="${bookARideForm}"
           th:method="POST">
         <input type="hidden" th:value="${ride.id}" name="rideId" th:id="rideId"/>
         <td th:text="${ride.fromCity}"/>
