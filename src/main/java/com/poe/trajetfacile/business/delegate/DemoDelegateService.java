@@ -11,11 +11,4 @@ public class DemoDelegateService {
         int age = Period.between(dateNaissance, LocalDate.now()).getYears();
         return age >= DemoDelegateService.AGE_MAJORITEE_FRANCE;
     }
-
-
-    public static void main(String[] args) {
-        // test ces méthode
-        assert true;
-    }
-
 }

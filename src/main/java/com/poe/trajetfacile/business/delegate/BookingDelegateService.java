@@ -12,8 +12,9 @@ public class BookingDelegateService {
      */
     public static boolean isCancelable(LocalDateTime desiredCancelationDate, LocalDateTime rideStartDate) {
         boolean isCancelable = true;
-        long duation = Duration.between(desiredCancelationDate, rideStartDate).toHours();
-        isCancelable = duation > BookingDelegateService.CANCELATION_MAX_DELAY_IN_HOURS;
+        long duration = Duration.between(desiredCancelationDate, rideStartDate).toMinutes();
+        long delayInMinutes = BookingDelegateService.CANCELATION_MAX_DELAY_IN_HOURS * 60; // convertion du délai en minutes
+        isCancelable = duration > delayInMinutes;
         return isCancelable;
     }
 }
