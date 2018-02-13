@@ -36,6 +36,9 @@ public class BookingServiceTests {
     public void canBookARide() throws RideIsFullBusinessException {
 
         short seat = 1;
+
+        assertThat(rideRepository.count()).isEqualTo(0);
+
         User user = new User();
         user.setLogin("login");
         user.setPassword("password");
