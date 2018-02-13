@@ -6,7 +6,7 @@ import com.poe.trajetfacile.form.BookARideForm;
 import com.poe.trajetfacile.form.OfferARideForm;
 import com.poe.trajetfacile.repository.RideRepository;
 import com.poe.trajetfacile.repository.UserRepository;
-import com.poe.trajetfacile.service.RideService;
+import com.poe.trajetfacile.business.service.RideService;
 import com.poe.trajetfacile.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;

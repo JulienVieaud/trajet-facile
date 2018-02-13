@@ -1,11 +1,10 @@
 
 package com.poe.trajetfacile.api;
 
-import com.poe.trajetfacile.domain.Ride;
 import com.poe.trajetfacile.domain.User;
 import com.poe.trajetfacile.repository.UserRepository;
 import com.poe.trajetfacile.repository.RideRepository;
-import com.poe.trajetfacile.service.UserService;
+import com.poe.trajetfacile.business.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

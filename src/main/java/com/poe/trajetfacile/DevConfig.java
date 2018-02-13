@@ -3,7 +3,7 @@ package com.poe.trajetfacile;
 import com.poe.trajetfacile.domain.User;
 import com.poe.trajetfacile.jdbc.UserDao;
 import com.poe.trajetfacile.repository.RideRepository;
-import com.poe.trajetfacile.service.UserService;
+import com.poe.trajetfacile.business.service.UserService;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

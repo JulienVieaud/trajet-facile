@@ -3,7 +3,7 @@ package com.poe.trajetfacile.api;
 import com.poe.trajetfacile.domain.Booking;
 import com.poe.trajetfacile.exception.RideIsFullBusinessException;
 import com.poe.trajetfacile.repository.BookingRepository;
-import com.poe.trajetfacile.service.BookingService;
+import com.poe.trajetfacile.business.service.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
