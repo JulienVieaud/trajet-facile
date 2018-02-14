@@ -31,7 +31,7 @@ public class User {
     private List<Ride> proposedRides = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
-    private List<Booking> bookings;
+    private List<Booking> bookings = new ArrayList<>();
 
     public Long getId() {
         return id;

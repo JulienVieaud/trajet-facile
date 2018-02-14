@@ -11,11 +11,13 @@ import com.poe.trajetfacile.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
 @Service
+@Transactional
 public class BookingService {
 
     @Autowired
@@ -35,13 +37,20 @@ public class BookingService {
 
         if (ride.getSeats() > 0) {
             ride.setSeats((short) (ride.getSeats() - 1));
+
             booking = new Booking();
             booking.setUser(user);
             booking.setRide(ride);
+
+            user.getBookings().add(booking);
+            ride.getBookings().add(booking);
+
             bookingRepository.save(booking);
+
         } else {
             throw new RideIsFullBusinessException("plus de places");
         }
+        System.out.println(booking.getRide().getId());
         return booking;
     }
 

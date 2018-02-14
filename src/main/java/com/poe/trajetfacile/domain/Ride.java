@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class Ride {
     private User userWhoProposed;
 
     @OneToMany(mappedBy = "ride")
-    private List<Booking> bookings;
+    private List<Booking> bookings = new ArrayList<>();
 
     public Long getId() {
         return id;

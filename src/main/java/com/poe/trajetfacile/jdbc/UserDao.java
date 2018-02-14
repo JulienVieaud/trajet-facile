@@ -14,7 +14,6 @@ public class UserDao {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-    @Chrono
     public void batchInsert() {
         List<String> users = new ArrayList<>();
         List<Object[]> parameters = new ArrayList<Object[]>();

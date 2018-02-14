@@ -5,13 +5,16 @@ import com.poe.trajetfacile.domain.Ride;
 import com.poe.trajetfacile.domain.User;
 import com.poe.trajetfacile.exception.RideIsFullBusinessException;
 import com.poe.trajetfacile.repository.RideRepository;
+import com.poe.trajetfacile.repository.UserRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Date;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -32,6 +35,9 @@ public class BookingServiceTests {
     @Autowired
     private RideRepository rideRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @Test
     public void canBookARide() throws RideIsFullBusinessException {
 
@@ -42,20 +48,28 @@ public class BookingServiceTests {
         User user = new User();
         user.setLogin("login");
         user.setPassword("password");
+
+        // création d'un utilisateur
         userService.signup(user);
+        assertThat(userRepository.findOne(user.getId())).isNotNull();
 
+        // création d'un trajet
         Ride ride = rideService.offerARide(new Date(), "Angers", "Nantes", 3d, seat, user.getId());
+        assertThat(rideRepository.findOne(ride.getId())).isNotNull();
 
+        // on vérifie que l'utilisateur n'a pas de réservation
+        List<Booking> bookings = userService.findAllBookings(user.getId());
+        assertThat(bookings.size()).isEqualTo(0);
+
+        // effectue une réservation
         Booking booking = bookingService.bookARide(user.getId(), ride.getId());
 
-        assertThat(booking.getRide().getSeats()).isEqualTo((short) (seat - 1));
-        assertThat(rideRepository.findOne(ride.getId()).getSeats()).isEqualTo(seat - 1);
+        // on vérifie que l'utilisateur a désormais une réservation
+        bookings = userService.findAllBookings(user.getId());
+        assertThat(bookings.size()).isGreaterThan(0); // pour l'exemple
+        assertThat(bookings.size()).isEqualTo(1);
+
+        assertThat(rideRepository.findOne(ride.getId()).getSeats()).isEqualTo((short) (seat - 1));
 
     }
-
-    @Test
-    public void noSeatLeft() {
-
-    }
-
 }
