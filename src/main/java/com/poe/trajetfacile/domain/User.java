@@ -1,10 +1,12 @@
 package com.poe.trajetfacile.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -22,8 +24,9 @@ public class User {
     private String firstName;
     private String lastName;
 
-    @Temporal(TemporalType.DATE)
-    private Date birthDate;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate birthDate;
     private String rating;
     private Boolean confirmed;
 
@@ -65,11 +68,11 @@ public class User {
         this.lastName = lastName;
     }
 
-    public Date getBirthDate() {
+    public LocalDate getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
 
