@@ -1,6 +1,5 @@
 package com.poe.trajetfacile.jdbc;
 
-import com.poe.trajetfacile.aop.Chrono;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;

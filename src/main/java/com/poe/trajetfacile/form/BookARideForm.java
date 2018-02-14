@@ -1,9 +1,5 @@
 package com.poe.trajetfacile.form;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
-import java.util.Date;
-
 public class BookARideForm {
 
     private Long userId;

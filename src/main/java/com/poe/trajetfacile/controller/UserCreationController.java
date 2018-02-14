@@ -1,9 +1,9 @@
 package com.poe.trajetfacile.controller;
 
+import com.poe.trajetfacile.business.service.UserService;
 import com.poe.trajetfacile.domain.User;
 import com.poe.trajetfacile.form.UserCreationForm;
 import com.poe.trajetfacile.repository.UserRepository;
-import com.poe.trajetfacile.business.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.stereotype.Controller;
