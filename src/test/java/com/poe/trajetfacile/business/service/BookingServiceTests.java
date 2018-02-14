@@ -10,7 +10,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Date;
@@ -58,14 +57,14 @@ public class BookingServiceTests {
         assertThat(rideRepository.findOne(ride.getId())).isNotNull();
 
         // on vérifie que l'utilisateur n'a pas de réservation
-        List<Booking> bookings = userService.findAllBookings(user.getId());
+        List<Booking> bookings = bookingService.findAllForUser(user.getId());
         assertThat(bookings.size()).isEqualTo(0);
 
         // effectue une réservation
         Booking booking = bookingService.bookARide(user.getId(), ride.getId());
 
         // on vérifie que l'utilisateur a désormais une réservation
-        bookings = userService.findAllBookings(user.getId());
+        bookings = bookingService.findAllForUser(user.getId());
         assertThat(bookings.size()).isGreaterThan(0); // pour l'exemple
         assertThat(bookings.size()).isEqualTo(1);
 

@@ -48,10 +48,4 @@ public class UserService {
         ride.setUserWhoProposed(user);
         userRepository.save(user);
     }
-
-    public List<Booking> findAllBookings(long userId) {
-        User user = userRepository.findOne(userId);
-        Hibernate.initialize(user.getBookings());
-        return user.getBookings();
-    }
 }

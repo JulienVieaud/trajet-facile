@@ -8,6 +8,7 @@ import com.poe.trajetfacile.exception.RideIsFullBusinessException;
 import com.poe.trajetfacile.repository.BookingRepository;
 import com.poe.trajetfacile.repository.RideRepository;
 import com.poe.trajetfacile.repository.UserRepository;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,7 @@ import javax.transaction.Transactional;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.List;
 
 @Service
 @Transactional
@@ -71,4 +73,11 @@ public class BookingService {
             throw new Exception("impossible d'annuler le trajet");
         }
     }
+
+    public List<Booking> findAllForUser(long userId) {
+        User user = userRepository.findOne(userId);
+        Hibernate.initialize(user.getBookings());
+        return user.getBookings();
+    }
+
 }
