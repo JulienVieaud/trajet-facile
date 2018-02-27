@@ -19,29 +19,25 @@ import java.util.ArrayList;
 @Transactional
 public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+	@Autowired
+	private UserRepository userRepository;
 
-    @Autowired
-    private RideRepository rideRepository;
+	@Autowired
+	private RideRepository rideRepository;
 
-    @Autowired
-    private InMemoryUserDetailsManager inMemoryUserDetailsManager;
+	@Autowired
+	private InMemoryUserDetailsManager inMemoryUserDetailsManager;
 
-    public void signup(User user) {
-        userRepository.save(user);
-        try {
-            inMemoryUserDetailsManager.createUser(new org.springframework.security.core.userdetails.User(user.getLogin(), user.getPassword(), new ArrayList<GrantedAuthority>()));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+	public void signup(User user) {
+		userRepository.save(user);
+		inMemoryUserDetailsManager.createUser(new org.springframework.security.core.userdetails.User(user.getLogin(), user.getPassword(), new ArrayList<GrantedAuthority>()));
+	}
 
-    public void addRide(Long userId, Long rideId) {
-        User user = userRepository.findOne(userId);
-        Ride ride = rideRepository.findOne(rideId);
-        user.getProposedRides().add(ride);
-        ride.setUserWhoProposed(user);
-        userRepository.save(user);
-    }
+	public void addRide(Long userId, Long rideId) {
+		User user = userRepository.findOne(userId);
+		Ride ride = rideRepository.findOne(rideId);
+		user.getProposedRides().add(ride);
+		ride.setUserWhoProposed(user);
+		userRepository.save(user);
+	}
 }
