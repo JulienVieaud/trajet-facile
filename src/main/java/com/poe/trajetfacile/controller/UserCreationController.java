@@ -34,7 +34,7 @@ public class UserCreationController {
             model.addAttribute("user", user.getLogin());
         }
 
-        return "/user/signup";
+        return "user/signup";
     }
 
     @PostMapping

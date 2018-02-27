@@ -57,6 +57,7 @@ public class RideManagerController {
             System.out.println(bindingResult.getAllErrors());
             return "ride/create";
         }
+
         Date convertedDateMinutePrecision = DateUtils.convert(form.getStartDate(), form.getStartHours(), form.getStartMinutes());
         Ride ride = rideService.offerARide(convertedDateMinutePrecision, form.getFromCity(), form.getToCity(), form.getCost(), form.getSeats(), user.getId());
         redirectAttributes.addAttribute("ride", ride.getId());
@@ -103,6 +104,7 @@ public class RideManagerController {
         return "ride/list"
                 ;
     }
+
     @GetMapping("searchAjax")
     public String searchAjax(Model model, @RequestParam(name = "search", required = true) String search) {
         Iterable<Ride> rides;
