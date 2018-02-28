@@ -5,6 +5,8 @@ import com.poe.trajetfacile.domain.Ride;
 import com.poe.trajetfacile.domain.User;
 import com.poe.trajetfacile.repository.RideRepository;
 import com.poe.trajetfacile.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,8 @@ import java.util.Date;
 @Service
 @Transactional
 public class RideService {
+
+	private static final Logger LOG = LoggerFactory.getLogger(RideService.class);
 
     @Autowired
     private RideRepository rideRepository;
@@ -41,7 +45,7 @@ public class RideService {
         ride.setUserWhoProposed(user);
         rideRepository.save(ride);
 
-        System.out.println("sending event");
+		LOG.info("sending event");
         template.convertAndSend("/topic/newRide", ride);
         return ride;
     }

@@ -26,7 +26,6 @@ public class DevConfig {
     @Bean
     public InitializingBean init() {
         return () -> {
-            System.out.println("init");
             User user = new User();
             user.setLogin("jean");
             user.setPassword("jean");

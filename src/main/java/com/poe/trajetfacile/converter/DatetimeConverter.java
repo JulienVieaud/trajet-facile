@@ -1,5 +1,7 @@
 package com.poe.trajetfacile.converter;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.convert.converter.Converter;
 
 import java.text.ParseException;
@@ -7,6 +9,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class DatetimeConverter implements Converter<String, Date> {
+
+	private static final Logger LOG = LoggerFactory.getLogger(DatetimeConverter.class);
 
 	private final String dateFormat;
 
@@ -16,7 +20,6 @@ public class DatetimeConverter implements Converter<String, Date> {
 
 	@Override
 	public Date convert(String dateToParse) {
-		System.out.println("Converting!!!!!!!!!!!!");
 		if (dateToParse == null || dateToParse.isEmpty()) {
 			return null;
 		}
@@ -25,7 +28,7 @@ public class DatetimeConverter implements Converter<String, Date> {
 		try {
 			parsedDate = sdf.parse(dateToParse);
 		} catch (ParseException e) {
-			
+			LOG.error(e.toString(), e);
 		}
 		return parsedDate;
 	}

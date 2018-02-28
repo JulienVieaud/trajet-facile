@@ -32,7 +32,6 @@ public class BookingService {
     private BookingRepository bookingRepository;
 
     public Booking bookARide(Long userId, Long rideId) throws RideIsFullBusinessException {
-        System.out.println("booking!!!");
         Booking booking = null;
         User user = userRepository.findOne(userId);
         Ride ride = rideRepository.findOne(rideId);
@@ -52,7 +51,6 @@ public class BookingService {
         } else {
             throw new RideIsFullBusinessException("plus de places");
         }
-        System.out.println(booking.getRide().getId());
         return booking;
     }
 
