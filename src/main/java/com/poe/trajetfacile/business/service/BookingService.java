@@ -4,6 +4,7 @@ import com.poe.trajetfacile.business.delegate.BookingDelegateService;
 import com.poe.trajetfacile.domain.Booking;
 import com.poe.trajetfacile.domain.Ride;
 import com.poe.trajetfacile.domain.User;
+import com.poe.trajetfacile.exception.BookingCancelationBusinessException;
 import com.poe.trajetfacile.exception.RideIsFullBusinessException;
 import com.poe.trajetfacile.repository.BookingRepository;
 import com.poe.trajetfacile.repository.RideRepository;
@@ -22,60 +23,60 @@ import java.util.List;
 @Transactional
 public class BookingService {
 
-    @Autowired
-    private RideRepository rideRepository;
+	@Autowired
+	private RideRepository rideRepository;
 
-    @Autowired
-    private UserRepository userRepository;
+	@Autowired
+	private UserRepository userRepository;
 
-    @Autowired
-    private BookingRepository bookingRepository;
+	@Autowired
+	private BookingRepository bookingRepository;
 
-    public Booking bookARide(Long userId, Long rideId) throws RideIsFullBusinessException {
-        Booking booking = null;
-        User user = userRepository.findOne(userId);
-        Ride ride = rideRepository.findOne(rideId);
+	public Booking bookARide(Long userId, Long rideId) throws RideIsFullBusinessException {
+		Booking booking = null;
+		User user = userRepository.findOne(userId);
+		Ride ride = rideRepository.findOne(rideId);
 
-        if (ride.getSeats() > 0) {
-            ride.setSeats((short) (ride.getSeats() - 1));
+		if (ride.getSeats() > 0) {
+			ride.setSeats((short) (ride.getSeats() - 1));
 
-            booking = new Booking();
-            booking.setUser(user);
-            booking.setRide(ride);
+			booking = new Booking();
+			booking.setUser(user);
+			booking.setRide(ride);
 
-            user.getBookings().add(booking);
-            ride.getBookings().add(booking);
+			user.getBookings().add(booking);
+			ride.getBookings().add(booking);
 
-            bookingRepository.save(booking);
+			bookingRepository.save(booking);
 
-        } else {
-            throw new RideIsFullBusinessException("plus de places");
-        }
-        return booking;
-    }
+		} else {
+			throw new RideIsFullBusinessException("plus de places");
+		}
+		return booking;
+	}
 
-    /**
-     * Permet d'annuler une réservation
-     */
-    public void cancel(long bookingId) throws Exception {
-        Booking booking = bookingRepository.findOne(bookingId);
+	/**
+	 * Permet d'annuler une réservation
+	 */
+	public void cancel(long bookingId) throws BookingCancelationBusinessException {
+		Booking booking = bookingRepository.findOne(bookingId);
 
-        Instant instant = booking.getRide().getStartDate().toInstant();
-        LocalDateTime rideStartDate = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
+		Instant instant = booking.getRide().getStartDate().toInstant();
+		LocalDateTime rideStartDate = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
 
-        if (BookingDelegateService.isCancelable(LocalDateTime.now(), rideStartDate)) {
-            booking.getRide().setSeats((short) (booking.getRide().getSeats() + 1));
-            rideRepository.save(booking.getRide());
-            bookingRepository.delete(booking);
-        } else {
-            throw new Exception("impossible d'annuler le trajet");
-        }
-    }
+		if (BookingDelegateService.isCancelable(LocalDateTime.now(), rideStartDate)) {
+			booking.getRide().setSeats((short) (booking.getRide().getSeats() + 1));
+			rideRepository.save(booking.getRide());
+			bookingRepository.delete(booking);
+		} else {
+			throw new BookingCancelationBusinessException("impossible d'annuler le trajet");
+		}
+	}
 
-    public List<Booking> findAllForUser(long userId) {
-        User user = userRepository.findOne(userId);
-        Hibernate.initialize(user.getBookings());
-        return user.getBookings();
-    }
+	public List<Booking> findAllForUser(long userId) {
+		User user = userRepository.findOne(userId);
+		Hibernate.initialize(user.getBookings());
+		return user.getBookings();
+	}
 
 }

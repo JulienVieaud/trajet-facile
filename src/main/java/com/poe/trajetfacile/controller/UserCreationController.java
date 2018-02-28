@@ -18,6 +18,7 @@ import javax.validation.Valid;
 @RequestMapping("/signup")
 public class UserCreationController {
 
+    private final String SIGNUP_PAGE = "user/signup";
     @Autowired
     private UserService userService;
 
@@ -34,20 +35,20 @@ public class UserCreationController {
             model.addAttribute("user", user.getLogin());
         }
 
-        return "user/signup";
+        return SIGNUP_PAGE;
     }
 
     @PostMapping
     public String save(@Valid UserCreationForm form, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
 
         if (bindingResult.hasErrors()) {
-            return "user/signup";
+            return SIGNUP_PAGE;
         }
 
         if (userRepository.findByLogin(form.getLogin()) != null) {
             // on a déjà un utilisateur avec ce login
             model.addAttribute("duplicateLoginError", "Cet utilisateur existe déjà");
-            return "user/signup";
+            return SIGNUP_PAGE;
         }
 
         User user = new User();

@@ -26,6 +26,7 @@ import java.util.Date;
 public class RideManagerController {
 
 	private static String toto;
+	private final String rides = "rides";
 
 	@Autowired
 	private RideService rideService;
@@ -70,7 +71,7 @@ public class RideManagerController {
 		rides = rideRepository.findAll();
 		Iterable<User> users = userRepository.findAll();
 
-		model.addAttribute("rides", rides);
+		model.addAttribute(this.rides, rides);
 		model.addAttribute("users", users);
 		model.addAttribute("message", message);
 		return "ride/list";
@@ -96,7 +97,7 @@ public class RideManagerController {
 
 		Iterable<User> users = userRepository.findAll();
 
-		model.addAttribute("rides", rides);
+		model.addAttribute(this.rides, rides);
 		model.addAttribute("search", search);
 		return "ride/list"
 				;
@@ -112,7 +113,7 @@ public class RideManagerController {
 		}
 
 		Iterable<User> users = userRepository.findAll();
-		model.addAttribute("rides", rides);
+		model.addAttribute(this.rides, rides);
 		return "ride/rides";
 	}
 

@@ -32,8 +32,6 @@ public class RideService {
     @Chrono
     public Ride offerARide(Date startDate, String fromCity, String toCity, Double cost, Short seats, Long userWhoProposed) {
 
-        // TODO ...contrôles métiers
-
         Ride ride = new Ride();
         ride.setStartDate(startDate);
         ride.setFromCity(fromCity);
